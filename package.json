@@ -1,0 +1,33 @@
+{
+  "name": "vite-plugin-vue-antd-dayjs",
+  "version": "1.0.0",
+  "description": "Day.js vite plugin for Ant Design vue",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "vite-plugin",
+    "vite-plugin-vue",
+    "rollup-plugin",
+    "Day.js",
+    "Moment",
+    "ant-design-vue"
+  ],
+  "devDependencies": {
+    "dayjs": "*"
+  },
+  "peerDependencies": {
+    "dayjs": "*"
+  },
+  "homepage": "",
+  "bugs": {
+    "url": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "millyTang",
+  "license": "MIT"
+}

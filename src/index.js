@@ -41,8 +41,9 @@ module.exports = function vitePluginVueForAntdDayjs() {
     load(id) { // 每个传入的模块请求时被调用
       if (isAntdvueId.test(id)) {
         console.log('load id', id)
+        const momentTransforeToDayjs = `import dayjs from 'dayjs'`
         const depStr = momentToDayjsPluginsInAntdVue.join('')
-        return depStr 
+        return momentTransforeToDayjs + depStr 
       }
     },
   }

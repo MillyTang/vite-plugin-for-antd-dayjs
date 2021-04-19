@@ -17,11 +17,11 @@ const presets = {
 }
 module.exports = function momentToDayjsPluginsInAntdVue() {
   const plugins = presets['antd-design-vue'].plugins.map(plugin => {
-    return `var ${plugin} = require('dayjs/plugin/${plugin}');` 
+    return `import ${plugin} from 'dayjs/plugin/${plugin}';` 
   })
   const extendPlugins =  presets['antd-design-vue'].plugins.map(plugin => {
     return `dayjs.extend(${plugin});` 
   })
-  const specialPlugin = [`var antdPlugin = require('vite-plugin-vue-antd-dayjs/src/antd-plugin');dayjs.extend(antdPlugin);`]
+  const specialPlugin = [`import 'dayjs/locale/zh-cn';dayjs.locale('zh-cn')`]
   return [...plugins, ...extendPlugins, ...specialPlugin]
 }

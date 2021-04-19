@@ -15,13 +15,13 @@ const presets = {
     replaceMoment: true
   }
 }
-export default function momentToDayjsPluginsInAntdVue() {
+module.exports = function momentToDayjsPluginsInAntdVue() {
   const plugins = presets['antd-design-vue'].plugins.map(plugin => {
-    return `const ${plugin} = require('dayjs/plugin/${plugin}');` 
+    return `var ${plugin} = require('dayjs/plugin/${plugin}');` 
   })
-  const extendPlugins = plugins.map(plugin => {
+  const extendPlugins =  presets['antd-design-vue'].plugins.map(plugin => {
     return `dayjs.extend(${plugin});` 
   })
-  const specialPlugin = [`const antdPlugin = require('vite-plugin-vue-antd-dayjs/src/antd-plugin');dayjs.extend(antdPlugin);`]
+  const specialPlugin = [`var antdPlugin = require('vite-plugin-vue-antd-dayjs/src/antd-plugin');dayjs.extend(antdPlugin);`]
   return [...plugins, ...extendPlugins, ...specialPlugin]
 }

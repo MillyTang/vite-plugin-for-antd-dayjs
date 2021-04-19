@@ -6,7 +6,7 @@ try {
       'tree.'
   )
 }
-import momentToDayjsPluginsInAntdVue from './map-to-dayjs-plugins'
+const momentToDayjsPluginsInAntdVue= require('./map-to-dayjs-plugins.js')
 // inputOptions type: string | string[] | {[entryName: string]: string}
 const makeEntry = (entry, initEntry) => {
   if (typeof entry === "object" && !Array.isArray(entry)) {
@@ -22,63 +22,28 @@ const makeEntry = (entry, initEntry) => {
     return [initEntry].concat(entry);
   }
 }
-export default function vitePluginVueForAntdDayjs() {
-  const isAntdvueId = 'antd-design-vue'
-  const  plugins = [
-    'isSameOrBefore',
-    'isSameOrAfter',
-    'advancedFormat',
-    'customParseFormat',
-    'weekday',
-    'weekYear',
-    'weekOfYear',
-    'isMoment',
-    'localeData',
-    'localizedFormat',
-  ]
+module.exports = function vitePluginVueForAntdDayjs() {
+  const isAntdvueId = 'moment-to-dayjs-for-antd-vue'
   return {
     name: 'vite-plugin-vue-for-antd-dayjs',
     enforce: 'pre', // 加载vite内置插件之前加载
     config: () => ({
-      alias: {
+      'resolve.alias': {
         moment: 'dayjs', // set dayjs alias
       }
     }), // 在被解析之前修改 Vite 配置
-    configResolved(resolvedConfig) {
-      // 存储最终解析的配置
-      config = resolvedConfig
-    }, // 在解析 Vite 配置后调用
-    handleHotUpdate({ modules, server}) {}, // 执行自定义 HMR 更新处理
-    options(inputOptions) {
-      // 增加 dayjs 的解析文件
-      console.log('inputOptions:', inputOptions)
-      const initFilePath = path.resolve(__dirname, 'dayjs-use-to-transfer.js')
-      const initEntry = require.resolve(initFilePath)
-      inputOptions.input = makeEntry(inputOptions.input, initEntry)
-      if (inputOptions.output.length) {
-        let dayjsOptput = {
-          file: 'dayjs-use-to-transfer.js',
-          plugins: plugins 
-        }
-        inputOptions.output.push(dayjsOptput)
-      } else {
-        inputOptions.output = [dayjsOptput]
-      }
-      return inputOptions 
-    }, // 服务启动时调用
-    buildStart() {}, // 服务启动时调用
     resolveId(id) { // 每个传入的模块请求时被调用
-      if (id === isAntdvueId) {
+      if (isAntdvueId.test(id)) {
+        console.log('resolveid id test', id)
         return id
       }
     },
     load(id) { // 每个传入的模块请求时被调用
-      if (id === isAntdvueId) {
-        let arrPlugins = momentToDayjsPluginsInAntdVue() 
-        return arrPlugins.join('') 
+      if (isAntdvueId.test(id)) {
+        console.log('load id', id)
+        const depStr = momentToDayjsPluginsInAntdVue.join('')
+        return depStr 
       }
     },
-    buildEnd() {}, // 在服务器关闭时被调用
-    closeBundle() {}
   }
 }

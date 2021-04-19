@@ -33,16 +33,16 @@ module.exports = function vitePluginVueForAntdDayjs() {
       }
     }), // 在被解析之前修改 Vite 配置
     resolveId(id) { // 每个传入的模块请求时被调用
-      if (isAntdvueId.test(id)) {
+      if (isAntdvueId === id) {
         console.log('resolveid id test', id)
         return id
       }
     },
     load(id) { // 每个传入的模块请求时被调用
-      if (isAntdvueId.test(id)) {
+      if (isAntdvueId === id) {
         console.log('load id', id)
-        const momentTransforeToDayjs = `import dayjs from 'dayjs'`
-        const depStr = momentToDayjsPluginsInAntdVue.join('')
+        const momentTransforeToDayjs = `import dayjs from 'dayjs';`
+        const depStr = momentToDayjsPluginsInAntdVue().join('')
         return momentTransforeToDayjs + depStr 
       }
     },

@@ -14,8 +14,10 @@ module.exports = function vitePluginVueForAntdDayjs() {
     name: 'vite-plugin-vue-for-antd-dayjs',
     enforce: 'pre', // 加载vite内置插件之前加载
     config: () => ({
-      'resolve.alias': {
-        moment: 'dayjs', // set dayjs alias
+      resolve: {
+        alias: {
+          moment: 'dayjs', // set dayjs alias 
+        }
       }
     }), // 在被解析之前修改 Vite 配置
     resolveId(id) { // 每个传入的模块请求时被调用

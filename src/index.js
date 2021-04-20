@@ -7,21 +7,7 @@ try {
   )
 }
 const momentToDayjsPluginsInAntdVue= require('./map-to-dayjs-plugins.js')
-// inputOptions type: string | string[] | {[entryName: string]: string}
-const makeEntry = (entry, initEntry) => {
-  if (typeof entry === "object" && !Array.isArray(entry)) {
-    Object.keys(entry).forEach(e => {
-      entry[e] = makeEntry(entry[e], initEntry);
-    });
-    return entry;
-  }
-  if (typeof entry === "string") {
-    return [initEntry, entry];
-  }
-  if (Array.isArray(entry)) {
-    return [initEntry].concat(entry);
-  }
-}
+
 module.exports = function vitePluginVueForAntdDayjs() {
   const isAntdvueId = 'moment-to-dayjs-for-antd-vue'
   return {

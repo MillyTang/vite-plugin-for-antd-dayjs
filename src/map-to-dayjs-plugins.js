@@ -12,7 +12,6 @@ const presets = {
       'localeData',
       'localizedFormat',
     ],
-    replaceMoment: true
   }
 }
 module.exports = function momentToDayjsPluginsInAntdVue() {
